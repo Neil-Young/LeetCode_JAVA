@@ -1,6 +1,18 @@
+import java.util.List;
+
 public class RemoveNthNodeFromEndofList {
     public static void main(String[] args){
-
+        ListNode head = new ListNode(1);
+        ListNode head2 = new ListNode(2);
+        head.next = head2;
+        ListNode head3 = new ListNode(3);
+        head.next.next = head3;
+        ListNode head4 = new ListNode(4);
+        head.next.next.next = head4;
+        ListNode head5 = new ListNode(5);
+        head.next.next.next.next = head5;
+        head.next.next.next.next.next = null;
+        removeNthFromEnd(head,2);
     }
 
     public static ListNode removeNthFromEnd(ListNode head, int n) {

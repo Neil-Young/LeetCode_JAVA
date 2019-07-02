@@ -1,7 +1,8 @@
+import java.util.Arrays;
 
 public class TwoSum {
 	public static void main(String[] args){
-		int[] b = {3,3};
+		int[] b = {3,2,4};
 		twoSum(b,6);
 	}
 	
