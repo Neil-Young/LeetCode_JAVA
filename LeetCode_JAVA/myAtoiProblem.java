@@ -1,75 +1,33 @@
 public class myAtoiProblem {
     public static void main(String[] args) {
-        int re = myAtoi("-03.14159");
+        int re = myAtoi("-");
         System.out.println(re);
     }
+    //reference: https://www.cnblogs.com/grandyang/p/4125537.html
 
-    //reference: http://www.programcreek.com/2012/12/leetcode-string-to-integer-atoi/
-    public static int myAtoi(String str){
-        if (str == null || str.length() < 1)
-            return 0;
+    //1. 若字符串开头是空格，则跳过所有空格，到第一个非空格字符，如果没有，则返回0.
 
-        // trim white spaces
-        str = str.trim();
-        char flag = '+';
+    //2. 若第一个非空格字符是符号 +/-，则标记 sign 的真假
 
-        // check negative or positive
-        int i = 0;
-        if (str.charAt(0) == '-') {
-            flag = '-';
-            i++;
-        } else if (str.charAt(0) == '+') {
-            i++;
+    //3. 若下一个字符不是数字，则返回0. 完全不考虑小数点和自然数的情况，不过这样也好，起码省事了不少。
+
+    //4. 如果下一个字符是数字，则转为整形存下来，若接下来再有非数字出现，则返回目前的结果。
+
+    //5. 还需要考虑边界问题，如果超过了整型数的范围，则用边界值替代当前值。
+
+    public static int myAtoi(String str) {
+        if (str.isEmpty()) return 0;
+        int sign = 1, base = 0, i = 0, n = str.length();
+        while (i < n && str.charAt(i) == ' ') ++i;
+        if (i < n && (str.charAt(i) == '+' || str.charAt(i) == '-')) {
+            sign = (str.charAt(i++) == '+') ? 1 : -1;
         }
-
-        // use double to store result
-        double result = 0;
-
-        // calculate value
-        while (str.length() > i && str.charAt(i) >= '0' && str.charAt(i) <= '9') {
-            result = result * 10 + (str.charAt(i) - '0');
-            i++;
-        }
-        if (flag == '-')
-            result = -result;
-
-        // handle max and min
-        if (result > Integer.MAX_VALUE)
-            return Integer.MAX_VALUE;
-        if (result < Integer.MIN_VALUE)
-            return Integer.MIN_VALUE;
-        return (int) result;
-    }
-
-    /*public static int myAtoi(String str) {
-        int result = 0;
-        str = str.trim();
-        String[] s = str.split(" ");
-        if (s[0].substring(0,1).equals("1") ||
-                s[0].substring(0,1).equals("2") ||
-                s[0].substring(0,1).equals("3") ||
-                s[0].substring(0,1).equals("4") ||
-                s[0].substring(0,1).equals("5") ||
-                s[0].substring(0,1).equals("6") ||
-                s[0].substring(0,1).equals("7") ||
-                s[0].substring(0,1).equals("8") ||
-                s[0].substring(0,1).equals("9") ||
-                s[0].substring(0,1).equals("-")
-        ) {
-            if (Long.valueOf(s[0]) <= Integer.MAX_VALUE && Long.valueOf(s[0]) > Integer.MIN_VALUE) {
-                result = Integer.valueOf(s[0]);
-            } else if (Long.valueOf(s[0]) > Integer.MAX_VALUE) {
-                result = Integer.MAX_VALUE;
-            } else if (Long.valueOf(s[0]) <= Integer.MIN_VALUE) {
-                result = Integer.MIN_VALUE;
+        while (i < n && str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+            if (base > Integer.MAX_VALUE / 10 || (base == Integer.MAX_VALUE / 10 && str.charAt(i) - '0' > 7)) {
+                return (sign == 1) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             }
-        } else if (s[0].substring(0,1).equals("0")) {
-            return myAtoi(s[0].replaceFirst("0", ""));
-        } else if (s[0].substring(0, 1).equals("-") && s[0].substring(1,2).equals("0")) {
-            return myAtoi(s[0].replaceFirst("0", ""));
-        } else {
-            return 0;
+            base = 10 * base + (str.charAt(i++) - '0');
         }
-        return result;
-    }*/
+        return base * sign;
+    }
 }
