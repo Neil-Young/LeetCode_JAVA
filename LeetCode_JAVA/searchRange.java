@@ -26,7 +26,7 @@ public class searchRange {
             int left = 0;
             int right = nums.length - 1;
             while (left <= right) {
-                if (nums[left] == target) { // starting from the beginning of the 'nums' and stopping when it find the first target
+                if (nums[left] == target) { // starting from the beginning of the 'nums' and stopping when it finds the first target
                     result[0] = left;
                     count++;
                     break;
@@ -36,7 +36,7 @@ public class searchRange {
             }
             while (left <= right) {
                 if (nums[right] == target) {// starting from the end of the 'nums' to search the target
-                    result[1] = right; // the searching will be stopped if the last 'target' is found or the pointer will move back to the fist target, which means there is only one target in the 'nums'
+                    result[1] = right; // the searching will be stopped if the last 'target' is found or the right pointer moves back to the fist target, which means there is only one target in the 'nums'
                     count++;
                     break;
                 } else {
